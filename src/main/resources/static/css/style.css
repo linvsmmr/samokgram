@@ -1,0 +1,20 @@
+#wrap {
+    width: 1200px;
+    height: 800px;
+    margin: 0 auto;
+}
+
+header {
+    height: 85px;
+    background-color: #dddddd;
+}
+
+.contents {
+    height: 700px;
+}
+
+
+footer {
+    height: 85px;
+    background-color: #dddddd;
+}
