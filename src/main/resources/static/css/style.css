@@ -13,6 +13,10 @@ header {
     height: 700px;
 }
 
+.contents > .user-box {
+    width: 500px;
+}
+
 
 footer {
     height: 85px;
