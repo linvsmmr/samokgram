@@ -2,6 +2,7 @@ package com.eunbi.samokgram.user.controller;
 
 import com.eunbi.samokgram.user.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,4 +36,19 @@ public class UserRestController {
         return resultMap;
 
     }
+
+    @GetMapping("/duplicate-id")
+    public Map<String,Boolean> isDuplicateId(@RequestParam String loginId) {
+        Map<String, Boolean> resultMap = new HashMap<>();
+
+        if (userService.isDuplicateId(loginId)) {
+            resultMap.put("isDuplicate", true);
+        } else {
+            resultMap.put("isDuplicate", false);
+        }
+        return resultMap;
+    }
+
+
+
 }

@@ -28,4 +28,17 @@ public class UserService {
         }
 
     }
+
+    public boolean isDuplicateId(String loginId) {
+        int count = userRepository.countByLoginId(loginId);
+
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
 }
