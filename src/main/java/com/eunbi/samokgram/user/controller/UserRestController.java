@@ -1,16 +1,13 @@
 package com.eunbi.samokgram.user.controller;
 
 import com.eunbi.samokgram.user.service.UserService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RequestMapping("/user")
-@Controller
+@RestController
 public class UserRestController {
 
     private final UserService userService;
@@ -19,6 +16,7 @@ public class UserRestController {
         this.userService = userService;
     }
 
+    @PostMapping("/join-process")
     public Map<String, String> join(
             @RequestParam String firstName,
             @RequestParam String lastName,

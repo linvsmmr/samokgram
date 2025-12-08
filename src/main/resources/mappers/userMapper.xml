@@ -23,4 +23,15 @@
             #{email}
         )
     </select>
+
+
+    <select id="countByLoginId" parameterType="string" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            `user`
+        WHERE
+            `login_id` = #{loginId}
+    </select>
+
 </mapper>
