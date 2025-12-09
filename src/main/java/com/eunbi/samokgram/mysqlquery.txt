@@ -1,0 +1,46 @@
+-- User Table
+CREATE TABLE `User` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `login_id` VARCHAR(16) NOT NULL,
+    `password` CHAR(64) NOT NULL,
+    `first_name` VARCHAR(16) NOT NULL,
+    `last_name` VARCHAR(16) NOT NULL,
+    `email` VARCHAR(64) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- Contents Table
+CREATE TABLE `Contents` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` BIGINT NOT NULL,
+    `text_contents` TEXT NULL,
+    `image_contents` VARCHAR(128) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- Comments Table
+CREATE TABLE `Comments` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `contents_id` BIGINT NOT NULL,
+    `comments_user_id` BIGINT NOT NULL,
+    `comments` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- Likes Table
+CREATE TABLE `Likes` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `liked_contents_id` BIGINT NOT NULL,
+    `liked_user_id` BIGINT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
