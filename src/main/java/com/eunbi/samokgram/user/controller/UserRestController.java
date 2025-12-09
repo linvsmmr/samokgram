@@ -1,6 +1,9 @@
 package com.eunbi.samokgram.user.controller;
 
+import com.eunbi.samokgram.user.domain.User;
 import com.eunbi.samokgram.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -48,5 +51,29 @@ public class UserRestController {
     }
 
 
+    @PostMapping("/login-process")
+    public Map<String, String> login(
+            @RequestParam String loginId,
+            @RequestParam String password,
+            HttpServletRequest request
+    ) {
+        Map<String, String> resultMap = new HashMap<>();
 
+        User user = userService.getUser(loginId, password);
+
+        if (user != null) {
+            resultMap.put("result", "success");
+            HttpSession session = request.getSession();
+
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("userName", user.getLoginId());
+        } else {
+            resultMap.put("result", "fail");
+        }
+
+        return resultMap;
+
+
+
+    }
 }

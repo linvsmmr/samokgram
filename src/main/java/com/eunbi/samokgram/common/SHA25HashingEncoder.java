@@ -1,4 +1,4 @@
-package com.eunbi.samokgram.user.encoder;
+package com.eunbi.samokgram.common;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

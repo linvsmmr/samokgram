@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.eunbi.samokgram.user.repository.UserRepository">
+    <select id="selectContent" parameterType="map" resultType="com.eunbi.samokgram.home.domain">
+        SELECT
+            `id`
+        , `user_id`
+        , `text_contents`
+        , `created_at`
+        , `updated_at`
+        FROM
+            `contents`
+    </select>
+</mapper>

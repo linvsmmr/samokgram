@@ -11,15 +11,18 @@
 <body>
 
 <div id="wrap">
-    <header>
-        <div class="display-4 ml-2 font-weight-bold">Samokgram</div>
+    <header class="d-flex align-items-center justify-content-between">
+        <div class="display-4 ml-3 font-weight-bold">Samokgram</div>
+        <div th:if="${session.userId != null}">
+            <span th:text="${session.userName}">사목</span>
+            <a href="/user/logout" class="mr-3">Logout</a>
+
+        </div>
     </header>
 
     <th:block layout:fragment="contents"></th:block>
 
-    <footer class="d-flex align-items-center justify-content-center">
-        <div>Copyright 2025. 사목그램 Co., Ltd. all rights reserved.</div>
-    </footer>
+    <th:block th:replace="~{fragments/footer}"></th:block>
 </div>
 
 

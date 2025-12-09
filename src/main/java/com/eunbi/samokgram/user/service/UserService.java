@@ -1,5 +1,7 @@
 package com.eunbi.samokgram.user.service;
 
+import com.eunbi.samokgram.user.domain.User;
+import com.eunbi.samokgram.common.SHA25HashingEncoder;
 import com.eunbi.samokgram.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,8 @@ public class UserService {
             String loginId,
             String password
     ) {
-        int count = userRepository.insertUser(firstName, lastName, email, loginId, password);
+        String encodedPassword = SHA25HashingEncoder.encode(password);
+        int count = userRepository.insertUser(firstName, lastName, email, loginId, encodedPassword);
 
         if (count == 1) {
             return true;
@@ -37,6 +40,12 @@ public class UserService {
         } else {
             return true;
         }
+    }
+
+    public User getUser(String loginId, String password) {
+        String encodedPassword = SHA25HashingEncoder.encode(password);
+        User user = userRepository.selectUser(loginId, encodedPassword);
+        return user;
     }
 
 

@@ -31,18 +31,27 @@
                         <input type="text" class="form-control form-control-sm col-9 mr-3" id="idInput">
                         <button type="button" class="btn btn-sm btn-dark text-white" style="min-width: 70px;" id="duplicateBtn">중복확인</button>
                     </div>
+                    <div class="d-none text-danger" id="duplicateText">아이디 중복!</div>
                 </div>
 
                 <div class="mt-3">
-                    <label>PW</label><input type="text" class="form-control form-control-sm" id="passwordInput">
+                    <label>PW</label><input type="password" class="form-control form-control-sm" id="passwordInput">
                 </div>
 
                 <div class="mt-3">
-                    <label>PW Check</label><input type="text" class="form-control form-control-sm" id="passwordConfirmInput">
+                    <label>PW Check</label><input type="password" class="form-control form-control-sm" id="passwordConfirmInput">
                 </div>
 
                 <button type="button" class="btn btn-block btn-dark text-white mt-4" id="joinBtn">Join</button>
+
+
+                <div class="d-flex justify-content-end">
+                    <a href="/user/login">Login...</a>
+                </div>
             </div>
+
+
+
         </section>
 
 
@@ -90,7 +99,7 @@
                 $.ajax({
                     type:"post"
                     , url: "/user/join-process"
-                    , data:{"loginId":id, "password":password, "firstName":firstName, "lastName":lastName, "email":email}
+                    , data:{"firstName":firstName, "lastName":lastName, "email":email, "loginId":id, "password":password}
                     , success:function (response) {
                         if (response.result == "success") {
                             location.href = "/user/login";
@@ -124,6 +133,7 @@
                             $("#duplicateText").removeClass("d-none");
                         } else {
                             alert("증복 안됨!")
+                            $("#duplicateText").addClass("d-none");
                         }
                     }
                     , error: function () {

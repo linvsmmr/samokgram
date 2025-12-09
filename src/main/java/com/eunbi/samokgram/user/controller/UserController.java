@@ -1,5 +1,7 @@
 package com.eunbi.samokgram.user.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,5 +20,13 @@ public class UserController {
         return "user/login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        session.invalidate();
+
+        return "redirect:/user/login";
+    }
 
 }
