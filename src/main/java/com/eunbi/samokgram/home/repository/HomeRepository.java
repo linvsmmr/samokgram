@@ -1,10 +1,15 @@
 package com.eunbi.samokgram.home.repository;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.eunbi.samokgram.home.domain.Contents;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@Mapper
-public interface HomeRepository {
+import java.util.List;
 
-    public int selectContent();
+@Repository
+public interface HomeRepository extends JpaRepository<Contents, Long> {
+    public List<Contents> findByUserId(long userId, Sort sort);
+
 
 }

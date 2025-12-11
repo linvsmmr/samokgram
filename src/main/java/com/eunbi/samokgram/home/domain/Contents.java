@@ -1,18 +1,28 @@
 package com.eunbi.samokgram.home.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "`contents`")
+@Entity
 @Getter
-@Setter
 
 public class Contents {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int userId;
+    private long userId;
     private String textContents;
     private String imageContents;
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

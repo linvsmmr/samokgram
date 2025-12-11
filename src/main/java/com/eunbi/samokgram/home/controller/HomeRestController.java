@@ -2,8 +2,15 @@ package com.eunbi.samokgram.home.controller;
 
 import com.eunbi.samokgram.home.repository.HomeRepository;
 import com.eunbi.samokgram.home.service.HomeService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("/home")
 @RestController
@@ -12,6 +19,24 @@ public class HomeRestController {
 
     public HomeRestController(HomeService homeService) {
         this.homeService = homeService;
+    }
+
+    @PostMapping("/upload-process")
+    public Map<String, String> upload(@RequestParam MultipartFile imageFile,
+                                      @RequestParam(required = false) String contents,
+                                      HttpSession session) {
+
+        long userId = (long) session.getAttribute("userId");
+
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        if (homeService.createContents(userId,imageFile,contents)) {
+            resultMap.put("result", "success");
+        } else {
+            resultMap.put("result", "fail");
+        }
+        return resultMap;
     }
 
 
