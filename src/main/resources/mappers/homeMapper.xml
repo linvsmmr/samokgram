@@ -4,11 +4,12 @@
 
 
 <mapper namespace="com.eunbi.samokgram.user.repository.UserRepository">
-    <select id="selectContent" parameterType="map" resultType="com.eunbi.samokgram.home.domain">
+    <select id="selectContent" parameterType="map" resultType="com.eunbi.samokgram.home.domain.Contents">
         SELECT
             `id`
         , `user_id`
         , `text_contents`
+        , `image_contents`
         , `created_at`
         , `updated_at`
         FROM

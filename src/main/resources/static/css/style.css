@@ -9,12 +9,47 @@ header {
     background-color: #dddddd;
 }
 
+.feed {
+    width: 400px;
+}
+
 .contents {
     height: 700px;
+    overflow: scroll;
 }
 
 .contents > .user-box {
     width: 500px;
+}
+
+.image-bord {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.image-contents {
+    max-width: 400px;
+}
+
+.reaction-bord {
+    height: 50px;
+}
+
+.sm-image-form {
+    width: 40px;
+    height: 40px;
+}
+
+.btn-style {
+    border: none;
+}
+
+.write-comment-form {
+    height: 10px;
+}
+
+.add-contents {
+    position: sticky;
 }
 
 

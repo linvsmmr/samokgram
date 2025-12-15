@@ -51,4 +51,10 @@
         AND `password` = #{password}
     </select>
 
+    <select id="selectUserById" parameterType="long"
+            resultType="com.eunbi.samokgram.user.domain.User">
+        SELECT
+            ``
+    </select>
+
 </mapper>

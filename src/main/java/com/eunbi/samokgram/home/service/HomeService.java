@@ -2,21 +2,27 @@ package com.eunbi.samokgram.home.service;
 
 import com.eunbi.samokgram.common.FileManager;
 import com.eunbi.samokgram.home.domain.Contents;
+import com.eunbi.samokgram.home.dto.HomeDetail;
 import com.eunbi.samokgram.home.repository.HomeRepository;
+import com.eunbi.samokgram.user.domain.User;
+import com.eunbi.samokgram.user.service.UserService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class HomeService {
 
     private final HomeRepository homeRepository;
+    private final UserService userService;
 
-    public HomeService(HomeRepository homeRepository) {
+    public HomeService(HomeRepository homeRepository, UserService userService) {
         this.homeRepository = homeRepository;
+        this.userService = userService;
     }
 
     public boolean createContents(
@@ -38,7 +44,22 @@ public class HomeService {
     }
 
     public List<Contents> getContentsList() {
-        return homeRepository.findAll();
+//        List<Contents> contentsList = homeRepository.findAll(Sort.by("id").descending());
+
+        return  homeRepository.findAll(Sort.by("id").descending());
+
+//
+//        List<HomeDetail> contentsDetailList = new ArrayList<>();
+//
+//        for (Contents contents:contentsList) {
+//
+//            User user = userService.getUserById(contents.getUserId());
+//
+//            HomeDetail homeDetail = HomeDetail.builder()
+//                    .id(contents.getId()).contents(contents.getTextContents())
+//                    .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId()).build();
+//            contentsDetailList.add(homeDetail);
+//        }
     }
 
     public Contents getContents(long id) {
@@ -46,6 +67,10 @@ public class HomeService {
                 .orElse(null);
     }
 
+
+//    public User getUserById() {
+//        return homeRepository.selectUserById();
+//    }
 
 
 
