@@ -51,10 +51,23 @@
         AND `password` = #{password}
     </select>
 
+
     <select id="selectUserById" parameterType="long"
             resultType="com.eunbi.samokgram.user.domain.User">
         SELECT
-            ``
+            `id`
+             , `login_id`
+             , `password`
+             , `first_name`
+             , `last_name`
+             , `email`
+             , `created_at`
+             , `updated_at`
+        FROM
+            `user`
+        WHERE
+            `id` = #{id}
+
     </select>
 
 </mapper>

@@ -13,7 +13,8 @@ import java.util.List;
 public interface HomeRepository extends JpaRepository<Contents, Long> {
     public List<Contents> findByUserId(long userId, Sort sort);
 
-//    public User selectUserById(@Param("id") long id);
+//    public int deleteContents(@Param("id") int id);
 
+    public int countLikes(@Param("id") int id);
 
 }

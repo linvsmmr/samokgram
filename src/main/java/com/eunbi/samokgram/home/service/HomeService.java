@@ -43,23 +43,24 @@ public class HomeService {
         return true;
     }
 
-    public List<Contents> getContentsList() {
-//        List<Contents> contentsList = homeRepository.findAll(Sort.by("id").descending());
+    public List<HomeDetail> getContentsList() {
+        List<Contents> contentsList = homeRepository.findAll(Sort.by("id").descending());
 
-        return  homeRepository.findAll(Sort.by("id").descending());
+        List<HomeDetail> detailList = new ArrayList<>();
 
-//
-//        List<HomeDetail> contentsDetailList = new ArrayList<>();
-//
-//        for (Contents contents:contentsList) {
-//
-//            User user = userService.getUserById(contents.getUserId());
-//
-//            HomeDetail homeDetail = HomeDetail.builder()
-//                    .id(contents.getId()).contents(contents.getTextContents())
-//                    .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId()).build();
-//            contentsDetailList.add(homeDetail);
-//        }
+        for (Contents contents:contentsList) {
+
+            User user = userService.getUserById(contents.getUserId());
+
+            HomeDetail homeDetail = HomeDetail.builder()
+                    .id(contents.getId()).contents(contents.getTextContents())
+                    .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId()).build();
+
+
+            detailList.add(homeDetail);
+        }
+
+        return detailList;
     }
 
     public Contents getContents(long id) {
@@ -67,12 +68,15 @@ public class HomeService {
                 .orElse(null);
     }
 
+    public int getLikes(int id) {
+        return homeRepository.countLikes(id);
+    }
 
-//    public User getUserById() {
-//        return homeRepository.selectUserById();
+
+
+//    public boolean deleteContents(int id) {
+//        return homeRepository.deleteContents(id);
 //    }
-
-
 
 
 

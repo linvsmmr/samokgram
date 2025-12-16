@@ -1,6 +1,7 @@
 package com.eunbi.samokgram.home.controller;
 
 import com.eunbi.samokgram.home.domain.Contents;
+import com.eunbi.samokgram.home.dto.HomeDetail;
 import com.eunbi.samokgram.home.service.HomeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -22,12 +23,9 @@ public class HomeController {
     }
 
     @GetMapping("/feed")
-    public String feed(Model model,
-                       HttpSession session) {
+    public String feed(Model model) {
 
-        long userId = (long) session.getAttribute("userId");
-
-        List<Contents> contentsList = homeService.getContentsList();
+        List<HomeDetail> contentsList = homeService.getContentsList();
 
         model.addAttribute("contentsList", contentsList);
 

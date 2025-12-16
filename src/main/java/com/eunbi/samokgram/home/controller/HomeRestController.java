@@ -3,10 +3,7 @@ package com.eunbi.samokgram.home.controller;
 import com.eunbi.samokgram.home.repository.HomeRepository;
 import com.eunbi.samokgram.home.service.HomeService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -38,6 +35,44 @@ public class HomeRestController {
         }
         return resultMap;
     }
+
+
+
+//    @PostMapping("/like-process")
+//    public Map<String, String> likes(@RequestParam int id) {
+//
+//
+//        Map<String, String> resultMap = new HashMap<>();
+//
+//
+//        if (homeService.getLikes()) {
+//            resultMap.put("result", "success");
+//        } else {
+//            resultMap.put("result", "fail");
+//        }
+//        return resultMap;
+//    }
+
+
+
+
+//    @DeleteMapping("/delete")
+//    public Map<String, String> delete(@RequestParam int id,
+//                                      HttpSession session) {
+//
+//        int contentsId = (int) session.getAttribute("contentsId");
+//
+//
+//        Map<String, String> resultMap = new HashMap<>();
+//
+//        if (homeService.deleteContents(contentsId)) {
+//            resultMap.put("result", "success");
+//        } else {
+//            resultMap.put("result", "fail");
+//        }
+//
+//        return resultMap;
+//    }
 
 
 }

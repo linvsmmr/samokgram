@@ -15,4 +15,21 @@
         FROM
             `contents`
     </select>
+
+<!--    <delete id="deleteContents" parameterType="int">-->
+<!--        DELETE FROM-->
+<!--            `contents`-->
+<!--        WHERE-->
+<!--            `id` = #{id}-->
+<!--    </delete>-->
+
+    <select id="countLikes" parameterType="int" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            `likes`
+        WHERE
+            `liked_contents_id` == #{id}
+    </select>
+
 </mapper>
