@@ -15,4 +15,7 @@ public class HomeDetail {
     private long userId;
     private String loginId;
 
+    private int likeCount;
+    private boolean isLike;
+
 }

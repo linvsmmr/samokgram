@@ -38,23 +38,6 @@ public class HomeRestController {
 
 
 
-//    @PostMapping("/like-process")
-//    public Map<String, String> likes(@RequestParam int id) {
-//
-//
-//        Map<String, String> resultMap = new HashMap<>();
-//
-//
-//        if (homeService.getLikes()) {
-//            resultMap.put("result", "success");
-//        } else {
-//            resultMap.put("result", "fail");
-//        }
-//        return resultMap;
-//    }
-
-
-
 
 //    @DeleteMapping("/delete")
 //    public Map<String, String> delete(@RequestParam int id,

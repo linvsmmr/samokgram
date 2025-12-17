@@ -4,8 +4,11 @@ import com.eunbi.samokgram.common.FileManager;
 import com.eunbi.samokgram.home.domain.Contents;
 import com.eunbi.samokgram.home.dto.HomeDetail;
 import com.eunbi.samokgram.home.repository.HomeRepository;
+import com.eunbi.samokgram.like.service.LikeService;
 import com.eunbi.samokgram.user.domain.User;
 import com.eunbi.samokgram.user.service.UserService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,16 +17,22 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@RequiredArgsConstructor
+// 필수 멤버변수를 생성자를 통해 대응하도록 해주는 어노테이션
 @Service
 public class HomeService {
 
     private final HomeRepository homeRepository;
     private final UserService userService;
+    private final LikeService likeService;
 
-    public HomeService(HomeRepository homeRepository, UserService userService) {
-        this.homeRepository = homeRepository;
-        this.userService = userService;
-    }
+//    public HomeService(HomeRepository homeRepository, UserService userService, LikeService likeService) {
+//        this.homeRepository = homeRepository;
+//        this.userService = userService;
+//        this.likeService = likeService;
+//    }
+
 
     public boolean createContents(
             long userId,
@@ -52,9 +61,11 @@ public class HomeService {
 
             User user = userService.getUserById(contents.getUserId());
 
+            int likeCount = likeService.countByPostId(contents.getId());
+
             HomeDetail homeDetail = HomeDetail.builder()
                     .id(contents.getId()).contents(contents.getTextContents())
-                    .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId()).build();
+                    .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId()).likeCount(likeCount).build();
 
 
             detailList.add(homeDetail);
@@ -66,10 +77,6 @@ public class HomeService {
     public Contents getContents(long id) {
         return homeRepository.findById(id)
                 .orElse(null);
-    }
-
-    public int getLikes(int id) {
-        return homeRepository.countLikes(id);
     }
 
 

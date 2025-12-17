@@ -1,25 +1,27 @@
-package com.eunbi.samokgram.home.domain;
+package com.eunbi.samokgram.like.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Entity
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-@Table(name = "`likes`")
+@NoArgsConstructor
+@Getter
+@IdClass(LikeId.class)
+@Entity
+@Table(name = "`like`")
 
-public class Likes {
+public class Like {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int likedContentsId;
-    private int likedUserId;
+    private long contentsId;
+    @Id
+    private long userId;
     @CreationTimestamp
     private LocalDateTime createdAt;
 }
