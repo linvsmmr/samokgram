@@ -37,8 +37,6 @@ public class HomeRestController {
     }
 
 
-
-
 //    @DeleteMapping("/delete")
 //    public Map<String, String> delete(@RequestParam int id,
 //                                      HttpSession session) {
