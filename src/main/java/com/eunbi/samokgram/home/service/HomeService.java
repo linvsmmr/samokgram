@@ -1,5 +1,6 @@
 package com.eunbi.samokgram.home.service;
 
+import com.eunbi.samokgram.comment.service.CommentService;
 import com.eunbi.samokgram.common.FileManager;
 import com.eunbi.samokgram.home.domain.Contents;
 import com.eunbi.samokgram.home.dto.HomeDetail;
@@ -26,6 +27,7 @@ public class HomeService {
     private final HomeRepository homeRepository;
     private final UserService userService;
     private final LikeService likeService;
+    private final CommentService commentService;
 
 //    public HomeService(HomeRepository homeRepository, UserService userService, LikeService likeService) {
 //        this.homeRepository = homeRepository;
@@ -52,7 +54,7 @@ public class HomeService {
         return true;
     }
 
-    public List<HomeDetail> getContentsList() {
+    public List<HomeDetail> getContentsList(long userId) {
         List<Contents> contentsList = homeRepository.findAll(Sort.by("id").descending());
 
         List<HomeDetail> detailList = new ArrayList<>();
@@ -62,10 +64,12 @@ public class HomeService {
             User user = userService.getUserById(contents.getUserId());
 
             int likeCount = likeService.countByPostId(contents.getId());
+            boolean isLike = likeService.isLikeByContentsIdAndUserId(contents.getId(), userId);
 
             HomeDetail homeDetail = HomeDetail.builder()
                     .id(contents.getId()).contents(contents.getTextContents())
-                    .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId()).likeCount(likeCount).build();
+                    .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId())
+                    .likeCount(likeCount).isLike(isLike).build();
 
 
             detailList.add(homeDetail);

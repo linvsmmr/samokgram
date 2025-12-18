@@ -11,4 +11,7 @@ public interface LikeRepository extends JpaRepository<Like, LikeId> {
 
     public int countLikeByContentsId(@RequestParam("contentsId") long contentsId);
 
+
+    public boolean existsByContentsIdAndUserId(long contentsId, long userId);
+
 }

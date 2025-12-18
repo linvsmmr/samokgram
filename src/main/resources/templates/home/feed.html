@@ -27,12 +27,12 @@
 
             <div class="d-flex justify-content-between border reaction-bord align-items-center">
                 <div>
-                    <i class="bi bi-heart-fill text-danger unlike-btn d-none"></i>
-                    <i class="bi bi-heart text-danger like-btn" th:data-contents-id="${contents.id}"></i>
+                    <i th:if="${contents.isLike}" class="bi bi-heart-fill text-danger unlike-btn"></i>
+                    <i th:unless="${contents.isLike}" class="bi bi-heart text-danger like-btn" th:data-contents-id="${contents.id}"></i>
                     <span>좋아요 <span th:text="${contents.likeCount}">n</span>개</span>
 
 
-                    <button id="commentBtn" class="btn btn-style"><img class="sm-image-form" src="https://img.icons8.com/ios7/1200/comments--v2.jpg" alt=""></button>
+                    <button class="btn btn-style comment-btn"><img class="sm-image-form" src="https://img.icons8.com/ios7/1200/comments--v2.jpg" alt=""></button>
                 </div>
                 <button id="deleteBtn" class="btn btn-style"><img class="sm-image-form" src="https://png.pngtree.com/png-vector/20190531/ourmid/pngtree-trash-bin-icon-png-image_1252303.jpg" alt=""></button>
             </div>
@@ -48,8 +48,8 @@
             </div>
 
             <div class="write-comment-form d-flex">
-                <input type="text" class="form-control" placeholder="댓글 내용을 입력하세요...">
-                <button class="btn btn-style"><img width="30" src="https://cdn-icons-png.flaticon.com/512/6731/6731644.png"></button>
+                <input id="commentInput" type="text" class="form-control" placeholder="댓글 내용을 입력하세요...">
+                <button class="btn btn-style comment-btn" th:data-contents-id="${contents.id}"><img width="30" src="https://cdn-icons-png.flaticon.com/512/6731/6731644.png"></button>
             </div>
         </div>
     </div>
@@ -61,6 +61,39 @@
 
 <script layout:fragment="script">
 
+    $(".comment-btn").on("click", function () {
+        let contentsId = $(this).data("contentsId");
+        let comment = $("#commentInput").val();
+
+        // 댓글 값을 이렇게만 얻어오면 맨 위의 게시글의 댓글값만 가져올수 있으니 수정하라고 하심
+
+
+        comment.append("contentsId", contentsId);
+        comment.append("comment", comment);
+
+
+        $.ajax({
+            type: "post"
+            , url: "/home/comment/write"
+            , data: formdata
+            , processData:false
+            , contentType:false
+            , success:function (response) {
+                if (response.result == "success") {
+                    location.reload();
+                } else {
+                    alert("댓글 작성 실패!")
+                }
+            }
+            , error:function (){
+                alert("댓글 작성 에러!")
+            }
+        })
+
+
+    })
+
+
     $(".like-btn").on("click", function () {
         let contentsId = $(this).data("contents-id");
 
@@ -71,7 +104,6 @@
             , success:function (response) {
                 if(response.result == "success") {
                     location.reload();
-
                 } else {
                     alert("좋아요 실패!");
                 }

@@ -23,9 +23,12 @@ public class HomeController {
     }
 
     @GetMapping("/feed")
-    public String feed(Model model) {
+    public String feed(Model model
+                        , HttpSession session) {
 
-        List<HomeDetail> contentsList = homeService.getContentsList();
+        long userId = (Long) session.getAttribute("userId");
+
+        List<HomeDetail> contentsList = homeService.getContentsList(userId);
 
         model.addAttribute("contentsList", contentsList);
 

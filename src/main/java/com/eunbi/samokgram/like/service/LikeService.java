@@ -32,4 +32,10 @@ public class LikeService {
     public int countByPostId(long contentsId) {
         return likeRepository.countLikeByContentsId(contentsId);
     }
+
+
+
+    public boolean isLikeByContentsIdAndUserId(long contentsId, long userId) {
+        return likeRepository.existsByContentsIdAndUserId(contentsId, userId);
+    };
 }
