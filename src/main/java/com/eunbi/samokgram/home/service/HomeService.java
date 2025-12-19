@@ -1,5 +1,6 @@
 package com.eunbi.samokgram.home.service;
 
+import com.eunbi.samokgram.comment.domain.Comment;
 import com.eunbi.samokgram.comment.service.CommentService;
 import com.eunbi.samokgram.common.FileManager;
 import com.eunbi.samokgram.home.domain.Contents;
@@ -65,11 +66,12 @@ public class HomeService {
 
             int likeCount = likeService.countByPostId(contents.getId());
             boolean isLike = likeService.isLikeByContentsIdAndUserId(contents.getId(), userId);
+            List<Comment> comments = commentService.getCommentsByContentsId(contents.getId());
 
             HomeDetail homeDetail = HomeDetail.builder()
                     .id(contents.getId()).contents(contents.getTextContents())
                     .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId())
-                    .likeCount(likeCount).isLike(isLike).build();
+                    .likeCount(likeCount).isLike(isLike).comments(comments).build();
 
 
             detailList.add(homeDetail);

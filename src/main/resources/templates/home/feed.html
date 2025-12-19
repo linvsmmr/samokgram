@@ -26,7 +26,7 @@
             </div>
 
             <div class="d-flex justify-content-between border reaction-bord align-items-center">
-                <div>
+                <div class="ml-2">
                     <i th:if="${contents.isLike}" class="bi bi-heart-fill text-danger unlike-btn"></i>
                     <i th:unless="${contents.isLike}" class="bi bi-heart text-danger like-btn" th:data-contents-id="${contents.id}"></i>
                     <span>좋아요 <span th:text="${contents.likeCount}">n</span>개</span>
@@ -39,16 +39,18 @@
 
             <div class="border">
                 <span class="font-weight-bold ml-3" th:text="${contents.loginId}"></span>
-                <span class="ml-1" th:text="${contents.contents}"></span>
+                <span class="ml-1" th:="${contents.contents}"></span>
 
                 <p class="mt-4 ml-2">댓글</p>
                 <hr>
-                <p class="ml-2"><b>감자</b><span class="ml-2"> 댓글내용어찌구</span></p>
-                <p class="ml-2"><b>고구마</b><span class="ml-2"> 댓글내용저찌구</span></p>
-            </div>
+
+                <div th:each="comment:${contents.comments}">
+                    <b class="ml-2 font-weight-bold" th:text="${comment.}">감자</b>
+                    <span class="ml-2"  th:text="${comment.comment}"> 댓글내용어찌구</span>
+                </div>
 
             <div class="write-comment-form d-flex">
-                <input id="commentInput" type="text" class="form-control" placeholder="댓글 내용을 입력하세요...">
+                <input th:id="|commentInput${contents.id}|" type="text" class="form-control" placeholder="댓글 내용을 입력하세요...">
                 <button class="btn btn-style comment-btn" th:data-contents-id="${contents.id}"><img width="30" src="https://cdn-icons-png.flaticon.com/512/6731/6731644.png"></button>
             </div>
         </div>
@@ -63,21 +65,15 @@
 
     $(".comment-btn").on("click", function () {
         let contentsId = $(this).data("contentsId");
-        let comment = $("#commentInput").val();
 
-        // 댓글 값을 이렇게만 얻어오면 맨 위의 게시글의 댓글값만 가져올수 있으니 수정하라고 하심
+        // let comment = $(this).parent().prev().val();
 
-
-        comment.append("contentsId", contentsId);
-        comment.append("comment", comment);
-
+        let comment = $("#commentInput" + contentsId).val();
 
         $.ajax({
             type: "post"
             , url: "/home/comment/write"
-            , data: formdata
-            , processData:false
-            , contentType:false
+            , data: {"contentsId":contentsId,"comment":comment}
             , success:function (response) {
                 if (response.result == "success") {
                     location.reload();

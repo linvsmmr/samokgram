@@ -1,10 +1,16 @@
 package com.eunbi.samokgram.comment.service;
 
 import com.eunbi.samokgram.comment.domain.Comment;
+import com.eunbi.samokgram.comment.dto.CommentDetail;
 import com.eunbi.samokgram.comment.repository.CommentRepository;
+import com.eunbi.samokgram.user.domain.User;
+import com.eunbi.samokgram.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -12,6 +18,7 @@ public class CommentService {
 
 
     private final CommentRepository commentRepository;
+    private final UserService userService;
 
     public boolean createComment(long contentsId, long userId, String comment) {
 
@@ -24,5 +31,16 @@ public class CommentService {
             return false;
         }
         return true;
+    }
+
+
+    public List<Comment> getCommentsByContentsId(long contentsId) {
+
+        List<Comment> commentList = commentRepository.findCommentsByContentsId(contentsId);
+
+        for (Comment comment:commentList) {
+            User user = userService.getUserById(comment.getUserId());
+            CommentDetail.builder().id(comment.getId()).userId(comment.)
+        }
     }
 }

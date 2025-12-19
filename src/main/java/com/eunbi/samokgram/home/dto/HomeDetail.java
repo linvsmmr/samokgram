@@ -1,8 +1,11 @@
 package com.eunbi.samokgram.home.dto;
 
 
+import com.eunbi.samokgram.comment.domain.Comment;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -17,5 +20,7 @@ public class HomeDetail {
 
     private int likeCount;
     private boolean isLike;
+
+    private List<Comment> comments;
 
 }
