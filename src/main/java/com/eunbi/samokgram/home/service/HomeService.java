@@ -1,6 +1,7 @@
 package com.eunbi.samokgram.home.service;
 
 import com.eunbi.samokgram.comment.domain.Comment;
+import com.eunbi.samokgram.comment.dto.CommentDetail;
 import com.eunbi.samokgram.comment.service.CommentService;
 import com.eunbi.samokgram.common.FileManager;
 import com.eunbi.samokgram.home.domain.Contents;
@@ -16,8 +17,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -66,12 +69,13 @@ public class HomeService {
 
             int likeCount = likeService.countByPostId(contents.getId());
             boolean isLike = likeService.isLikeByContentsIdAndUserId(contents.getId(), userId);
-            List<Comment> comments = commentService.getCommentsByContentsId(contents.getId());
+
+            List<CommentDetail> commentList = commentService.getCommentsByContentsId(contents.getId());
 
             HomeDetail homeDetail = HomeDetail.builder()
                     .id(contents.getId()).contents(contents.getTextContents())
                     .imagePath(contents.getImageContents()).userId(contents.getUserId()).loginId(user.getLoginId())
-                    .likeCount(likeCount).isLike(isLike).comments(comments).build();
+                    .likeCount(likeCount).isLike(isLike).comments(commentList).build();
 
 
             detailList.add(homeDetail);
@@ -87,9 +91,25 @@ public class HomeService {
 
 
 
-//    public boolean deleteContents(int id) {
-//        return homeRepository.deleteContents(id);
-//    }
+    public boolean deleteContents(long id) {
+         Optional<Contents> optionalContents = homeRepository.findById(id);
+         if (optionalContents.isPresent()) {
+             Contents contents = optionalContents.get();
+
+             FileManager.removeFile(contents.getImageContents());
+
+             try {
+                 homeRepository.delete(contents);
+             } catch (DataAccessException e) {
+                 return false;
+             }
+         } else {
+             return false;
+         }
+// 추가적으로 모달창 만들어보기
+        // 모달은 하나인데 컨텐츠 아이디는 여러개임. 이때 모달을 눌렀을 때 특정 컨텐츠 아이디를 가진 모달로 삭제 기능을 수행하는 방법에 대해 고민해야 합니다
+         return true;
+    }
 
 
 

@@ -34,13 +34,24 @@ public class CommentService {
     }
 
 
-    public List<Comment> getCommentsByContentsId(long contentsId) {
+    public List<CommentDetail> getCommentsByContentsId(long contentsId) {
 
-        List<Comment> commentList = commentRepository.findCommentsByContentsId(contentsId);
+        List<Comment> commentList = commentRepository.findByContentsId(contentsId);
+
+        List<CommentDetail> commentDetailList = new ArrayList<>();
+
 
         for (Comment comment:commentList) {
             User user = userService.getUserById(comment.getUserId());
-            CommentDetail.builder().id(comment.getId()).userId(comment.)
+            CommentDetail commentDetail = CommentDetail.builder()
+                    .id(comment.getId())
+                    .userId(comment.getUserId())
+                    .loginId(user.getLoginId())
+                    .contents(comment.getComments())
+                    .build();
+
+            commentDetailList.add(commentDetail);
         }
+        return commentDetailList;
     }
 }

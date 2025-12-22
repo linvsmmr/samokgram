@@ -39,14 +39,14 @@
 
             <div class="border">
                 <span class="font-weight-bold ml-3" th:text="${contents.loginId}"></span>
-                <span class="ml-1" th:="${contents.contents}"></span>
+                <span class="ml-1 mb-2" th:text="${contents.contents}"></span>
 
                 <p class="mt-4 ml-2">댓글</p>
                 <hr>
 
                 <div th:each="comment:${contents.comments}">
-                    <b class="ml-2 font-weight-bold" th:text="${comment.}">감자</b>
-                    <span class="ml-2"  th:text="${comment.comment}"> 댓글내용어찌구</span>
+                    <b class="ml-2 font-weight-bold" th:text="${comment.loginId}">감자</b>
+                    <span class="ml-2"  th:text="${comment.contents}"> 댓글내용어찌구</span>
                 </div>
 
             <div class="write-comment-form d-flex">
@@ -62,6 +62,9 @@
 
 
 <script layout:fragment="script">
+
+
+
 
     $(".comment-btn").on("click", function () {
         let contentsId = $(this).data("contentsId");
