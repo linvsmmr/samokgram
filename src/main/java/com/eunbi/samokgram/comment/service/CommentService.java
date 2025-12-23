@@ -5,6 +5,7 @@ import com.eunbi.samokgram.comment.dto.CommentDetail;
 import com.eunbi.samokgram.comment.repository.CommentRepository;
 import com.eunbi.samokgram.user.domain.User;
 import com.eunbi.samokgram.user.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,10 @@ public class CommentService {
             commentDetailList.add(commentDetail);
         }
         return commentDetailList;
+    }
+
+    @Transactional
+    public void deleteCommentByContentsId(long contentsId) {
+        commentRepository.deleteByContentsId(contentsId);
     }
 }

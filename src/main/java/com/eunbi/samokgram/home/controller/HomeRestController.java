@@ -37,23 +37,24 @@ public class HomeRestController {
     }
 
 
-//    @DeleteMapping("/delete")
-//    public Map<String, String> delete(@RequestParam int id,
-//                                      HttpSession session) {
-//
-//        int contentsId = (int) session.getAttribute("contentsId");
-//
-//
-//        Map<String, String> resultMap = new HashMap<>();
-//
-//        if (homeService.deleteContents(contentsId)) {
-//            resultMap.put("result", "success");
-//        } else {
-//            resultMap.put("result", "fail");
-//        }
-//
-//        return resultMap;
-//    }
+    @DeleteMapping("/delete")
+    public Map<String, String> delete(@RequestParam long id,
+                                      HttpSession session) {
+
+        Map<String, String> resultMap = new HashMap<>();
+
+
+        long userId = (long) session.getAttribute("userId");
+
+        if (homeService.deleteContents(id, userId)) {
+            resultMap.put("result", "success");
+        } else {
+            resultMap.put("result", "fail");
+        }
+
+        return resultMap;
+    }
+
 
 
 }

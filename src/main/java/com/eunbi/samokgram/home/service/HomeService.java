@@ -91,15 +91,20 @@ public class HomeService {
 
 
 
-    public boolean deleteContents(long id) {
+    public boolean deleteContents(long id, long userId) {
          Optional<Contents> optionalContents = homeRepository.findById(id);
          if (optionalContents.isPresent()) {
-             Contents contents = optionalContents.get();
-
-             FileManager.removeFile(contents.getImageContents());
-
              try {
-                 homeRepository.delete(contents);
+                 Contents contents = optionalContents.get();
+
+                 if (contents.getUserId() != userId) {
+                     return false;
+                 } else {
+                     likeService.deleteLikeByContentsId(contents.getId());
+                     homeRepository.delete(optionalContents.get());
+                     FileManager.removeFile(contents.getImageContents());
+                 }
+
              } catch (DataAccessException e) {
                  return false;
              }
@@ -110,8 +115,6 @@ public class HomeService {
         // 모달은 하나인데 컨텐츠 아이디는 여러개임. 이때 모달을 눌렀을 때 특정 컨텐츠 아이디를 가진 모달로 삭제 기능을 수행하는 방법에 대해 고민해야 합니다
          return true;
     }
-
-
 
 
 }

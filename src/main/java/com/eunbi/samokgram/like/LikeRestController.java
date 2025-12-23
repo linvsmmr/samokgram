@@ -3,10 +3,7 @@ package com.eunbi.samokgram.like;
 import com.eunbi.samokgram.like.service.LikeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +37,25 @@ public class LikeRestController {
         return resultMap;
     }
 
+
+
+    @DeleteMapping("/unlike")
+    public Map<String, String> unlike(@RequestParam long contentsId,
+                                      HttpSession session) {
+
+        long userId = (long) session.getAttribute("userId");
+
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        if (likeService.deleteLike(contentsId, userId)) {
+            resultMap.put("result", "success");
+        } else {
+            resultMap.put("result", "fail");
+        }
+        return resultMap;
+
+    }
 
 
 

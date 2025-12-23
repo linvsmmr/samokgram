@@ -14,4 +14,6 @@ public interface LikeRepository extends JpaRepository<Like, LikeId> {
 
     public boolean existsByContentsIdAndUserId(long contentsId, long userId);
 
+    public void deleteByContentsId(long contentsId);
+
 }

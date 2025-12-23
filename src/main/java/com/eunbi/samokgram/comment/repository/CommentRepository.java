@@ -13,6 +13,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     public List<Comment> findByContentsId(long contentsId);
 
+    public void deleteByContentsId(long contentsId);
+
 
 
 

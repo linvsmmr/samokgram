@@ -27,15 +27,29 @@
 
             <div class="d-flex justify-content-between border reaction-bord align-items-center">
                 <div class="ml-2">
-                    <i th:if="${contents.isLike}" class="bi bi-heart-fill text-danger unlike-btn"></i>
+                    <i th:if="${contents.isLike}" class="bi bi-heart-fill text-danger unlike-btn" th:data-contents-id="${contents.id}"></i>
                     <i th:unless="${contents.isLike}" class="bi bi-heart text-danger like-btn" th:data-contents-id="${contents.id}"></i>
                     <span>좋아요 <span th:text="${contents.likeCount}">n</span>개</span>
 
 
                     <button class="btn btn-style comment-btn"><img class="sm-image-form" src="https://img.icons8.com/ios7/1200/comments--v2.jpg" alt=""></button>
                 </div>
-                <button id="deleteBtn" class="btn btn-style"><img class="sm-image-form" src="https://png.pngtree.com/png-vector/20190531/ourmid/pngtree-trash-bin-icon-png-image_1252303.jpg" alt=""></button>
+                <button th:id="|delete-btn${contents.id}|" class="btn btn-style" data-toggle="modal" data-target="#deleteModal" th:data-contents-id="${contents.id}"><img class="sm-image-form" src="https://png.pngtree.com/png-vector/20190531/ourmid/pngtree-trash-bin-icon-png-image_1252303.jpg" alt=""></button>
             </div>
+
+
+            <div class="modal fade" th:data-target="|deleteModal${contents.id}|" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="text-center form-control">
+                        <a href="#" id="deleteBtn">삭제하기</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
 
             <div class="border">
                 <span class="font-weight-bold ml-3" th:text="${contents.loginId}"></span>
@@ -62,6 +76,57 @@
 
 
 <script layout:fragment="script">
+
+    $(".delete-btn").on("click", function () {
+        let contentsId = $(this).data("contents-id");
+
+        $("#deleteBtn").data("contents-id", contentsId);
+    });
+
+    $("#deleteBtn").on("click", function (e) {
+
+        e.preventDefault();
+
+        let contentsId = $(this).data("contents-id");
+
+        $.ajax({
+            type:"delete"
+            , url:"/home/delete"
+            , data:{"id":contentsId}
+            , success:function (response) {
+                if (response.result == "success") {
+                    location.reload();
+                    alert("삭제 성공")
+                } else {
+                    alert("삭제 실패!");
+                }
+            }
+            , error:function () {
+                alert("삭제 에러");
+            }
+        })
+
+    })
+
+    $(".unlike-btn").on("click", function () {
+        let contentsId = $(this).data("contents-id");
+
+        $.ajax({
+            type:"delete"
+            , url:"/home/unlike"
+            , data:{"contentsId":contentsId}
+            , success:function (response) {
+                if (response.result == "success") {
+                    location.reload();
+                } else {
+                    alert("좋아요 취소 실패!")
+                }
+            }
+            , error:function () {
+                alert("좋아요 취소 에러")
+            }
+        })
+    });
 
 
 
