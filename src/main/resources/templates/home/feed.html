@@ -34,21 +34,20 @@
 
                     <button class="btn btn-style comment-btn"><img class="sm-image-form" src="https://img.icons8.com/ios7/1200/comments--v2.jpg" alt=""></button>
                 </div>
-                <button th:id="|delete-btn${contents.id}|" class="btn btn-style" data-toggle="modal" data-target="#deleteModal" th:data-contents-id="${contents.id}"><img class="sm-image-form" src="https://png.pngtree.com/png-vector/20190531/ourmid/pngtree-trash-bin-icon-png-image_1252303.jpg" alt=""></button>
+                <button class="btn btn-style" data-toggle="modal" th:data-target="|#deleteModal${contents.id}|" th:data-contents-id="|delete-btn${contents.id}|">
+                    <img class="sm-image-form" src="https://png.pngtree.com/png-vector/20190531/ourmid/pngtree-trash-bin-icon-png-image_1252303.jpg" alt=""></button>
             </div>
 
 
-            <div class="modal fade" th:data-target="|deleteModal${contents.id}|" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" th:id="|deleteModal${contents.id}|" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="text-center form-control">
-                        <a href="#" id="deleteBtn">삭제하기</a>
+                    <div class="modal-content">
+                        <div class="text-center form-control">
+                            <a href="#" class="remove-btn" th:data-contents-id="${contents.id}">삭제하기</a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-
-
 
 
             <div class="border">
@@ -63,6 +62,7 @@
                     <span class="ml-2"  th:text="${comment.contents}"> 댓글내용어찌구</span>
                 </div>
 
+
             <div class="write-comment-form d-flex">
                 <input th:id="|commentInput${contents.id}|" type="text" class="form-control" placeholder="댓글 내용을 입력하세요...">
                 <button class="btn btn-style comment-btn" th:data-contents-id="${contents.id}"><img width="30" src="https://cdn-icons-png.flaticon.com/512/6731/6731644.png"></button>
@@ -71,19 +71,41 @@
     </div>
 
 
-
+    </div>
 </section>
 
 
 <script layout:fragment="script">
 
-    $(".delete-btn").on("click", function () {
-        let contentsId = $(this).data("contents-id");
+   $(".remove-btn").on("click", function (e) {
 
-        $("#deleteBtn").data("contents-id", contentsId);
-    });
+       let contentsId = $(this).data("contents-id");
 
-    $("#deleteBtn").on("click", function (e) {
+       $(".delete-btn").data("contents-id", contentsId);
+
+       e.preventDefault();
+
+       $.ajax({
+           type:"delete"
+           , url:"/home/delete"
+           , data:{"id":contentsId}
+           , success:function (response) {
+               if (response.result == "success") {
+                   location.reload();
+               } else {
+                   alert("삭제 실패!");
+               }
+           }
+           , error:function () {
+               alert("삭제 에러");
+           }
+       })
+
+
+
+   });
+
+   $(".delete-btn").on("click", function (e) {
 
         e.preventDefault();
 
